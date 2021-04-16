@@ -1,21 +1,15 @@
 import * as React from 'react'
-import styled from 'styled-components'
+import { Body } from '../../components/templates/Body';
+import { BodyWithTopBar } from '../../components/templates/BodyWithTopBar';
 
-import { Counter } from '../../components/organisms/Counter'
 
-interface Props {
+export const IndexPage: React.FC = () => {
 
-}
-
-const Container = styled.div`
-    background: lightblue;
-`
-
-export const IndexPage: React.FC<Props> = () => {
-    
     return (
-        <Container>
-            <Counter />
-        </Container>
+        <BodyWithTopBar>
+
+            <h1>HI</h1>
+
+        </BodyWithTopBar>
     )
 }

@@ -1,4 +1,0 @@
-type Click @model {
-  id: ID!
-  time: Int!
-}
