@@ -2,10 +2,10 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { AppContext } from '../globals/loadingContext'
 
-import { IndexPage } from './Index/IndexPage'
+import { IndexPage } from './Index'
+import { UserPage } from './User'
 import { Loading } from '../components/molecules/Loading'
-
-
+import { routes } from './RootRoutes'
 
 
 
@@ -22,9 +22,11 @@ export default function RootRouter() {
             {loading && <Loading />}
             <Router>
                 <Switch>
-                    <Route exact path="*">
+                    <Route exact path={routes[0].path}>
                         <IndexPage />
-
+                    </Route>
+                    <Route exact path={routes[1].path}>
+                        <UserPage/>
                     </Route>
                 </Switch>
             </Router>

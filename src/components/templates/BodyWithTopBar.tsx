@@ -1,8 +1,10 @@
-import { createStyles, Divider, fade, List, ListItem, ListItemIcon, ListItemText, SwipeableDrawer, Theme, Typography } from '@material-ui/core';
+import { createStyles, fade, List, ListItem, ListItemIcon, ListItemText, SwipeableDrawer, Theme } from '@material-ui/core';
 import { AppBar, IconButton, InputBase, makeStyles, Toolbar } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import * as React from 'react'
+import { useHistory } from 'react-router-dom';
+import { routes } from '../../content/RootRoutes';
 import { lightest } from '../../globals/colors';
 import { companyNameAllCaps } from '../../globals/dk_names';
 import { Body } from './Body';
@@ -76,8 +78,8 @@ export const BodyWithTopBar: React.FC = ({ children }) => {
     const [openLeftBar, setOpenLeftBar] = React.useState(false)
     const barClickHandle = () => setOpenLeftBar(!openLeftBar)
     const classes = useStyles();
+    const history = useHistory();
 
-    const menuItems = ['Inbox', 'Starred', 'Send email', 'Drafts']
 
     return (
         <Body>
@@ -94,10 +96,10 @@ export const BodyWithTopBar: React.FC = ({ children }) => {
             </AppBar>
             <SwipeableDrawer anchor='left' open={openLeftBar} onClose={barClickHandle} onOpen={barClickHandle} >
                 <List className={classes.list}>
-                    {menuItems.map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <MenuIcon /> : <MenuIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
+                    {routes.map(({ name, path, icon }, index) => (
+                        <ListItem button key={index} onClick={() => history.push(path)}>
+                            <ListItemIcon>{icon}</ListItemIcon>
+                            <ListItemText primary={name} />
                         </ListItem>
                     ))}
                 </List>
