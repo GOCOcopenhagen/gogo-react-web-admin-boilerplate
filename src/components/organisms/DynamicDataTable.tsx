@@ -1,25 +1,38 @@
-import { IconButton } from '@material-ui/core'
+import { Button, IconButton } from '@material-ui/core'
 import * as React from 'react'
 import { CustomCard } from '../molecules/Card'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import styled from 'styled-components';
-import { lightest, normallight, light, normal } from '../../globals/colors';
+import { lightest, normallight, light, darkest } from '../../globals/colors';
+import { SearchInput } from '../molecules/SearchInput';
+import { HorizontalFlexDivSpaceBetween } from '../templates/Wrappers';
 
-type DynamicDataTableProps = {
+type THProps = {
     style?: React.CSSProperties
+    activateSort?: React.Dispatch<React.SetStateAction<number | null>>
+    index?: number
+    activeIndex?: number | null
 }
 
-const TH: React.FC = ({ children }) => {
-    const [up, setUp] = React.useState(false)
-    const handleClick = () => setUp(!up)
+const TH: React.FC<THProps> = ({ children, index, activateSort, activeIndex }) => {
+
+    const handleClick = () => {
+        if (activateSort && index && activeIndex !== undefined) activateSort(index === activeIndex ? null : index)
+    }
+    console.log(activeIndex)
+
     return (
-        <th style={{ textAlign: 'left', color: normal }}>{children}
-            <IconButton onClick={handleClick}>
-                <ArrowDownwardIcon style={{
-                    transition: "transform 0.3s",
-                    transform: up ? "rotate(0deg)" : "rotate(-180deg)"
-                }} />
-            </IconButton>
+        <th style={{ textAlign: 'left', backgroundColor: lightest, color: darkest }}>
+            {children}
+            {activateSort && (
+                <IconButton onClick={handleClick}>
+                    <ArrowDownwardIcon style={{
+                        color: (activeIndex===null? normallight : darkest),
+                        transition: "transform 0.3s",
+                        transform: index === activeIndex ? "rotate(0deg)" : "rotate(-180deg)"
+                    }} />
+                </IconButton>
+            )}
         </th>)
 }
 
@@ -28,7 +41,7 @@ type Cell = string | number | string[]
 
 type Row = Cell[]
 
-type TableData = {
+export type TableData = {
     head: string[]
     bodyRows: Row[]
 }
@@ -40,6 +53,7 @@ const TableDataCell = styled.td<{ odd: boolean, hover: boolean }>`
     background-color: ${(props) => (props.hover ? normallight : props.odd ? light : lightest)};
 
 `
+
 const TR: React.FC<{ row: Cell[], index: number }> = ({ row, index }) => {
     const [hover, setHover] = React.useState(false)
 
@@ -52,29 +66,56 @@ const TR: React.FC<{ row: Cell[], index: number }> = ({ row, index }) => {
         </tr>)
 }
 
+type DynamicDataTableProps = {
+    style?: React.CSSProperties
+    tableData: TableData
+    title: string
+}
 
-export const DynamicDataTable: React.FC<DynamicDataTableProps> = ({ style }) => {
-    const tableData: TableData = {
-        head: ['Company', 'Contact', 'Country'],
-        bodyRows: [
-            ['GOCO', 'Anton Tobias Jensen', 'Denmark'],
-            ['GOCO', 'Amanda', 'Portugal']
-        ]
+const PAGE_LENGTH = 50
+
+export const DynamicDataTable: React.FC<DynamicDataTableProps> = ({ style, tableData, title }) => {
+    const [sortIndex, setSortIndex] = React.useState<number | null>(null)
+    const [page, setPage] = React.useState(0)
+    const [rows, setRows] = React.useState<Row[]>(tableData.bodyRows.slice(0, PAGE_LENGTH))
+
+    const numberOfPages = (tableData.bodyRows.length / PAGE_LENGTH)
+
+    const changePage = (increment: boolean) => () => {
+        var newPage = page
+
+        if (increment) newPage++
+        else if (!increment) newPage--
+        setRows(tableData.bodyRows.slice(newPage * PAGE_LENGTH, (newPage + 1) * PAGE_LENGTH))
+        setPage(newPage)
     }
 
     return (
         <CustomCard style={style}>
-            <h3>All users</h3>
+            <HorizontalFlexDivSpaceBetween>
+                <h3>{title} ({rows.length} of {tableData.bodyRows.length})</h3>
+                <SearchInput searchPlaceholder="Search..." />
+            </HorizontalFlexDivSpaceBetween>
+
             <table style={{ width: '100%', borderSpacing: 1, borderCollapse: 'collapse' }}>
                 <thead>
                     <tr>
-                        {tableData.head.map((cell, headCellKey) => <TH key={headCellKey}>{cell}</TH>)}
+                        {tableData.head.map((cell, headCellKey) =>
+                            <TH key={headCellKey} activateSort={setSortIndex} activeIndex={sortIndex} index={headCellKey + 1}>{cell}</TH>)}
                     </tr>
                 </thead>
                 <tbody>
-                    {tableData.bodyRows.map((bodyRow, index) => <TR row={bodyRow} index={index} key={index} />)}
+                    {rows.map((bodyRow, index) => <TR row={bodyRow} index={index + (page * PAGE_LENGTH)} key={index + (page * PAGE_LENGTH)} />)}
                 </tbody>
             </table>
+            <div style={{ margin: 10 }}>
+                <HorizontalFlexDivSpaceBetween>
+                    <Button disabled={page === 0} variant="contained" onClick={changePage(false)}>Previous page</Button>
+                    <p>Page {page + 1} of {(numberOfPages + 1).toFixed(0)}</p>
+                    <Button disabled={page === numberOfPages} variant="contained" onClick={changePage(true)}>Next page</Button>
+                </HorizontalFlexDivSpaceBetween>
+            </div>
+
         </CustomCard>
     )
 }

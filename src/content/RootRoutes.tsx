@@ -19,8 +19,8 @@ export const routes: Route[] = [
         secure: false
     },
     {
-        path: '/users',
-        name: 'Users',
+        path: '/segments',
+        name: 'Segments',
         icon: <GroupIcon/>,
         secure: false
     },

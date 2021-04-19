@@ -3,9 +3,10 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { AppContext } from '../globals/loadingContext'
 
 import { IndexPage } from './Index'
-import { UserPage } from './User'
+import { SegmentingPage } from './Segmenting'
 import { Loading } from '../components/molecules/Loading'
 import { routes } from './RootRoutes'
+import { NotificationCenterPage } from './NotificationCenter'
 
 
 
@@ -26,7 +27,10 @@ export default function RootRouter() {
                         <IndexPage />
                     </Route>
                     <Route exact path={routes[1].path}>
-                        <UserPage/>
+                        <SegmentingPage/>
+                    </Route>
+                    <Route exact path={routes[2].path}>
+                        <NotificationCenterPage/>
                     </Route>
                 </Switch>
             </Router>
