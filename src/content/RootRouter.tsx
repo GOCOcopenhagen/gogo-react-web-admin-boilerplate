@@ -7,6 +7,7 @@ import { SegmentingPage } from './Segmenting'
 import { Loading } from '../components/molecules/Loading'
 import { routes } from './RootRoutes'
 import { NotificationCenterPage } from './NotificationCenter'
+import { DetailedSegmentingPage } from './Segmenting/Detailed'
 
 
 
@@ -28,6 +29,9 @@ export default function RootRouter() {
                     </Route>
                     <Route exact path={routes[1].path}>
                         <SegmentingPage/>
+                    </Route>
+                    <Route exact path={routes[1].path+'/:id'}>
+                        <DetailedSegmentingPage/>
                     </Route>
                     <Route exact path={routes[2].path}>
                         <NotificationCenterPage/>

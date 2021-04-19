@@ -2,11 +2,13 @@ import * as React from 'react'
 import { BodyWithTopBar } from '../../components/templates/BodyWithTopBar';
 import { CustomCard } from '../../components/molecules/Card';
 import { CustomSection } from '../../components/templates/Wrappers';
-import { SegmentTable } from '../../components/molecules/CreateSegmentTable';
+import { CreateSegmentTable } from '../../components/molecules/CreateSegmentTable';
+import { Segment } from '../../globals/Types';
+import { ListSegments } from '../../components/molecules/ListSegments';
 
 
 function getRandomInt() {
-    return Math.floor(Math.random() * 6);
+    return Math.floor(Math.random() * 20);
 }
 
 const investments = ['Thorsager-1', 'Thorsager-2', 'Fredericiagade', 'Sorø-1', 'Sorø-2']
@@ -14,7 +16,7 @@ const investments = ['Thorsager-1', 'Thorsager-2', 'Fredericiagade', 'Sorø-1', 
 function getRandomInvestmentList() {
     var i = getRandomInt()
     var list: string[] = []
-    while (i !== 5) {
+    while (i <5) {
         const investment = investments[i]
         if (!list.includes(investment)) list.push(investment)
         i = getRandomInt()
@@ -28,9 +30,7 @@ for (let i = 0; i < 1000; i++) {
     const d = {
         id: i + 1,
         name: "Name" + i,
-        surname: "Surname" + Math.round(i / 10),
-        isMarried: i % 2 ? true : false,
-        birthDate: new Date(1987, 1, 1).toISOString(),
+        status: getRandomInt()<10?'Confirmed':'Pending',
         gorups: getRandomInvestmentList().toString()
     };
     bigData.push(d);
@@ -38,7 +38,7 @@ for (let i = 0; i < 1000; i++) {
 
 export const SegmentingPage: React.FC = () => {
 
-    const [segments, setSegments] = React.useState<{ name: string, size: number }[]>([])
+    const [segments, setSegments] = React.useState<Segment[]>([{name: 'First segment', size:220}])
 
     const createSegment = (name: string, size: number) => {
         setSegments((old) => [...old, ({ name: name, size: size })])
@@ -47,16 +47,12 @@ export const SegmentingPage: React.FC = () => {
     return (
         <BodyWithTopBar>
             <CustomSection container>
-                <CustomCard>
+                <CustomCard style={{flexGrow: 3, width: 300}}>
                     <h3>Your segments</h3>
-                    {segments.map(({ name, size }) => (
-                        <div>
-                            <p>Name: {name} size: {size}</p>
-                        </div>
-                    ))}
+                    <ListSegments segments={segments}/>
                 </CustomCard>
                 <CustomCard style={{ flexGrow: 3 }}>
-                    <SegmentTable data={bigData} segmentAction={createSegment} />
+                    <CreateSegmentTable data={bigData} segmentAction={createSegment} />
                 </CustomCard>
             </CustomSection>
 

@@ -14,9 +14,9 @@ export const VerticalFlexDiv = styled.div`
     justify-content: flex-start;
 `
 
-export const CustomSection = styled.section<{ container?: boolean }>`
+export const CustomSection = styled.section<{ container?: boolean, column?: boolean }>`
     display:flex;
-    flex-direction:row;
+    flex-direction:${(props: { column?: boolean }) => (props.column) ? 'column' : 'row'};
     max-width: ${(props: { container?: boolean }) => (props.container) ? '1300px' : 'auto'};
     margin: auto;
     align-items:flex-start;

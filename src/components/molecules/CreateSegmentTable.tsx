@@ -22,7 +22,7 @@ import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 
 const col = [
   { title: "name", field: "name" },
-  { title: "Created", field: "birthDate" },
+  { title: "Status", field: "status" },
   { title: "Investments", field: "gorups" },
 ]
 
@@ -31,7 +31,7 @@ type SegmentTableProps = {
   segmentAction: (name: string, size: number) => void
 }
 
-export const SegmentTable: React.FC<SegmentTableProps> = ({ data, segmentAction }) => {
+export const CreateSegmentTable: React.FC<SegmentTableProps> = ({ data, segmentAction }) => {
 
   const createSegment = (_: any, data: (object | object[])) => {
     var tmpData:object[] = []
