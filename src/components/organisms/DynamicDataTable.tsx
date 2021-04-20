@@ -1,6 +1,5 @@
 import { Button, IconButton } from '@material-ui/core'
 import * as React from 'react'
-import { CustomCard } from '../molecules/Card'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import styled from 'styled-components';
 import { lightest, normallight, light, darkest } from '../../globals/colors';
@@ -27,7 +26,7 @@ const TH: React.FC<THProps> = ({ children, index, activateSort, activeIndex }) =
             {activateSort && (
                 <IconButton onClick={handleClick}>
                     <ArrowDownwardIcon style={{
-                        color: (activeIndex===null? normallight : darkest),
+                        color: (activeIndex === null ? normallight : darkest),
                         transition: "transform 0.3s",
                         transform: index === activeIndex ? "rotate(0deg)" : "rotate(-180deg)"
                     }} />
@@ -54,11 +53,13 @@ const TableDataCell = styled.td<{ odd: boolean, hover: boolean }>`
 
 `
 
-const TR: React.FC<{ row: Cell[], index: number }> = ({ row, index }) => {
+const TR: React.FC<{ row: Cell[], index: number, onRowPress?: (id: string) => void }> = ({ row, index, onRowPress }) => {
     const [hover, setHover] = React.useState(false)
 
+    const handleClick = () => onRowPress && onRowPress('some-id-here')
+
     return (
-        <tr className="monospace" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+        <tr className="monospace" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} onClick={handleClick}>
             {row.map((cell, cellIndex) =>
                 <TableDataCell key={cellIndex} odd={index % 2 === 0} hover={hover}>
                     {cell.toString()}
@@ -67,19 +68,21 @@ const TR: React.FC<{ row: Cell[], index: number }> = ({ row, index }) => {
 }
 
 type DynamicDataTableProps = {
-    style?: React.CSSProperties
     tableData: TableData
     title: string
+    customLength?: number
+    onRowPress?: (id: string) => void
 }
 
-const PAGE_LENGTH = 50
 
-export const DynamicDataTable: React.FC<DynamicDataTableProps> = ({ style, tableData, title }) => {
+export const DynamicDataTable: React.FC<DynamicDataTableProps> = ({ tableData, title, customLength, onRowPress }) => {
+    const PAGE_LENGTH = customLength || 50
+
     const [sortIndex, setSortIndex] = React.useState<number | null>(null)
     const [page, setPage] = React.useState(0)
     const [rows, setRows] = React.useState<Row[]>(tableData.bodyRows.slice(0, PAGE_LENGTH))
 
-    const numberOfPages = (tableData.bodyRows.length / PAGE_LENGTH)
+    const numberOfPages = Math.round(tableData.bodyRows.length / PAGE_LENGTH)
 
     const changePage = (increment: boolean) => () => {
         var newPage = page
@@ -91,7 +94,7 @@ export const DynamicDataTable: React.FC<DynamicDataTableProps> = ({ style, table
     }
 
     return (
-        <CustomCard style={style}>
+        <>
             <HorizontalFlexDivSpaceBetween>
                 <h3>{title} ({rows.length} of {tableData.bodyRows.length})</h3>
                 <SearchInput searchPlaceholder="Search..." />
@@ -105,17 +108,18 @@ export const DynamicDataTable: React.FC<DynamicDataTableProps> = ({ style, table
                     </tr>
                 </thead>
                 <tbody>
-                    {rows.map((bodyRow, index) => <TR row={bodyRow} index={index + (page * PAGE_LENGTH)} key={index + (page * PAGE_LENGTH)} />)}
+                    {rows.map((bodyRow, index) => <TR onRowPress={onRowPress} row={bodyRow}
+                        index={index + (page * PAGE_LENGTH)} key={index + (page * PAGE_LENGTH)} />)}
                 </tbody>
             </table>
             <div style={{ margin: 10 }}>
                 <HorizontalFlexDivSpaceBetween>
-                    <Button disabled={page === 0} variant="contained" onClick={changePage(false)}>Previous page</Button>
-                    <p>Page {page + 1} of {(numberOfPages + 1).toFixed(0)}</p>
-                    <Button disabled={page === numberOfPages} variant="contained" onClick={changePage(true)}>Next page</Button>
+                    <Button size='small' disabled={page === 0} variant="contained" onClick={changePage(false)}>Previous page</Button>
+                    <p>Page {page + 1} of {(numberOfPages + 1)}</p>
+                    <Button disabled={!numberOfPages || page === numberOfPages} variant="contained" onClick={changePage(true)}>Next page</Button>
                 </HorizontalFlexDivSpaceBetween>
             </div>
 
-        </CustomCard>
+        </>
     )
 }

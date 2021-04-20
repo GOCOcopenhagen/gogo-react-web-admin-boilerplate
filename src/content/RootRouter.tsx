@@ -6,8 +6,10 @@ import { IndexPage } from './Index'
 import { SegmentingPage } from './Segmenting'
 import { Loading } from '../components/molecules/Loading'
 import { routes } from './RootRoutes'
-import { NotificationCenterPage } from './NotificationCenter'
+import { NotificationCenterPage } from './Users'
 import { DetailedSegmentingPage } from './Segmenting/Detailed'
+import { SendNotificationPage } from './Segmenting/SendNotification'
+import { DetailedNotificationPage } from './Segmenting/DetailedNotification'
 
 
 
@@ -30,8 +32,14 @@ export default function RootRouter() {
                     <Route exact path={routes[1].path}>
                         <SegmentingPage/>
                     </Route>
-                    <Route exact path={routes[1].path+'/:id'}>
+                    <Route exact path={routes[1].path+'/:segment'}>
                         <DetailedSegmentingPage/>
+                    </Route>
+                    <Route exact path={routes[1].path+'/:segment/new'}>
+                        <SendNotificationPage/>
+                    </Route>
+                    <Route exact path={routes[1].path+'/:segment/:id'}>
+                        <DetailedNotificationPage/>
                     </Route>
                     <Route exact path={routes[2].path}>
                         <NotificationCenterPage/>

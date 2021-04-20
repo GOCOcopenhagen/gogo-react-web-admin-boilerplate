@@ -1,43 +1,54 @@
-import { Breadcrumbs, Link, Typography } from '@material-ui/core';
+import { Breadcrumbs, Chip, Link, Typography } from '@material-ui/core';
 import * as React from 'react'
-import { useHistory } from 'react-router-dom';
 import { StatItem } from '../../components/atoms/StatItem';
-import { ActionList } from '../../components/molecules/ActionList';
 import { CustomCard } from '../../components/molecules/Card';
-import { DynamicDataTable, TableData } from '../../components/organisms/DynamicDataTable';
+import { IOSNotificationPreview } from '../../components/molecules/IOSNotificationPreview';
+import { DynamicDataTable } from '../../components/organisms/DynamicDataTable';
 import { BodyWithTopBar } from '../../components/templates/BodyWithTopBar';
 import { CustomSection, VerticalFlexDiv } from '../../components/templates/Wrappers';
-import { Segment } from '../../globals/Types';
+import { warning } from '../../globals/colors';
+import { PushNotification, Segment } from '../../globals/Types';
 import { tableData } from '../../placeholders/data';
 
 
 const segment: Segment = {
     name: "Copenhagen - High-end culture",
-    size: 9362
+    size: 1000
 }
 
-export const DetailedSegmentingPage: React.FC = () => {
-    const history = useHistory()
+const notification: PushNotification = {
+    name: '3 Days of Design campaign - monday',
+    title: 'Følg med i 3 days of design',
+    content: '3daysofdesign is a platform for global talents to showcase new concepts within design, lifestyle, furniture, lighting and interior design.',
+    sentDate: new Date()
+}
 
-    const goToNotification = (segmentId: string) => (notifiactionId: string) => {
-        history.push('/segments/'+segmentId+'/'+notifiactionId)
-    }
+export const DetailedNotificationPage: React.FC = () => {
+
+
     return (
         <BodyWithTopBar>
             <CustomSection container column style={{ marginTop: 10 }}>
                 <Breadcrumbs aria-label="breadcrumb">
                     <Link color="inherit" href="/">Dashboard</Link>
                     <Link color="inherit" href="/segments">Segments</Link>
-                    <Typography color="textPrimary">{segment.name}</Typography>
+                    <Link color="inherit" href="/segments/test-segment">{segment.name}</Link>
+                    <Typography color="textPrimary">{notification.name}</Typography>
+
                 </Breadcrumbs>
-                <h1>{segment.name}</h1>
+                <Chip label="Scheduled" style={{ backgroundColor: warning }} />
+
+                <h1>{notification.name}</h1>
             </CustomSection>
 
             <CustomSection container>
-                <VerticalFlexDiv style={{ flexGrow: 1 }}>
+                <CustomCard style={{ flexGrow: 1 }}>
+                    <DynamicDataTable title="Recipients" tableData={tableData} />
+                </CustomCard>
+                <VerticalFlexDiv style={{ flexGrow: 1, maxWidth: 400 }}>
                     <CustomCard>
-                        <h3>ACTIONS</h3>
-                        <ActionList />
+                    <h3>Preview</h3>
+                    <IOSNotificationPreview title={notification.title} content={notification.content} />
                     </CustomCard>
                     <CustomCard>
                         <h3>Statistics</h3>
@@ -45,14 +56,6 @@ export const DetailedSegmentingPage: React.FC = () => {
                         <StatItem name='Last notification' content='10/3/2021' />
                         <StatItem name='Notifications sent' content={30.291} />
                         <StatItem name='Segment created' content='10/12/2020' />
-                    </CustomCard>
-                </VerticalFlexDiv>
-                <VerticalFlexDiv style={{ flexGrow: 2 }}>
-                    <CustomCard>
-                        <DynamicDataTable title="Notifications sent" tableData={tableData} customLength={10} onRowPress={goToNotification(segment.name)}/>
-                    </CustomCard>
-                    <CustomCard>
-                        <DynamicDataTable title="Users in this segment" tableData={tableData} customLength={10} />
                     </CustomCard>
                 </VerticalFlexDiv>
             </CustomSection>

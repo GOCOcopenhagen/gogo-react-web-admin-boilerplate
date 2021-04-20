@@ -10,3 +10,6 @@ export const light = '#F6F6FB'
 export const lightest = '#FAFAFD'
 
 export const white = '#FFFFFF'
+
+export const warning = '#fff200'
+

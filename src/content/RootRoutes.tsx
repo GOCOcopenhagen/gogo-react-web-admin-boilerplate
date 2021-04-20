@@ -1,8 +1,7 @@
 import * as React from 'react'
 import HomeIcon from '@material-ui/icons/Home';
 import GroupIcon from '@material-ui/icons/Group';
-import AddAlertIcon from '@material-ui/icons/AddAlert';
-
+import GroupWorkIcon from '@material-ui/icons/GroupWork';
 
 type Route = {
     path: string
@@ -21,13 +20,13 @@ export const routes: Route[] = [
     {
         path: '/segments',
         name: 'Segments',
-        icon: <GroupIcon/>,
+        icon: <GroupWorkIcon/>,
         secure: false
     },
     {
-        path: '/notifications',
-        name: 'Notification Center',
-        icon: <AddAlertIcon/>,
+        path: '/users',
+        name: 'Users',
+        icon: <GroupIcon/>,
         secure: false
     },
 ]

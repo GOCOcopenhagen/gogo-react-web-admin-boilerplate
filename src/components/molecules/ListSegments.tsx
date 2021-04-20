@@ -28,7 +28,7 @@ export const ListSegments: React.FC<ListSegmentsProps> = ({ segments }) => {
             <TableCell>{name}</TableCell>
             <TableCell align='right'>{size}</TableCell>
             <TableCell align='right'>
-              <IconButton>
+              <IconButton href='/segments/test-segment'>
                 <SendIcon />
               </IconButton>
             </TableCell>

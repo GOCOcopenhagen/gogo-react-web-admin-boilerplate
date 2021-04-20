@@ -23,15 +23,16 @@ import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 const col = [
   { title: "name", field: "name" },
   { title: "Status", field: "status" },
-  { title: "Investments", field: "gorups" },
+  { title: "Interests", field: "gorups" },
 ]
 
 type SegmentTableProps = {
-  data: object[],
+  data: object[]
   segmentAction: (name: string, size: number) => void
+  title?:string
 }
 
-export const CreateSegmentTable: React.FC<SegmentTableProps> = ({ data, segmentAction }) => {
+export const CreateSegmentTable: React.FC<SegmentTableProps> = ({ data, segmentAction, title }) => {
 
   const createSegment = (_: any, data: (object | object[])) => {
     var tmpData:object[] = []
@@ -42,12 +43,12 @@ export const CreateSegmentTable: React.FC<SegmentTableProps> = ({ data, segmentA
 
 
   return (
-    <MaterialTable style={{}} title="Search users" data={data} columns={col}
+    <MaterialTable style={{}} title={title || "Search users"} data={data} columns={col}
       actions={[{ tooltip: 'Create new segment', icon: () => <CreateNewFolderIcon />, onClick: createSegment }]}
-      options={{
-        selection: true,
-        filtering: true,
-        grouping: true
+      options={{ selection: true, filtering: true, grouping: true,
+        rowStyle:{
+          fontFamily: "monospace"
+        }
       }}
       //@ts-ignore
       icons={tableIcons}

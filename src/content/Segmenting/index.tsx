@@ -5,36 +5,9 @@ import { CustomSection } from '../../components/templates/Wrappers';
 import { CreateSegmentTable } from '../../components/molecules/CreateSegmentTable';
 import { Segment } from '../../globals/Types';
 import { ListSegments } from '../../components/molecules/ListSegments';
+import { getData } from '../../placeholders/data';
+import { Breadcrumbs, Link, Typography } from '@material-ui/core';
 
-
-function getRandomInt() {
-    return Math.floor(Math.random() * 20);
-}
-
-const investments = ['Thorsager-1', 'Thorsager-2', 'Fredericiagade', 'Sorø-1', 'Sorø-2']
-
-function getRandomInvestmentList() {
-    var i = getRandomInt()
-    var list: string[] = []
-    while (i <5) {
-        const investment = investments[i]
-        if (!list.includes(investment)) list.push(investment)
-        i = getRandomInt()
-    }
-    list.sort((a, b) => ('' + a).localeCompare(b))
-    return list
-}
-
-const bigData: object[] = [];
-for (let i = 0; i < 1000; i++) {
-    const d = {
-        id: i + 1,
-        name: "Name" + i,
-        status: getRandomInt()<10?'Confirmed':'Pending',
-        gorups: getRandomInvestmentList().toString()
-    };
-    bigData.push(d);
-}
 
 export const SegmentingPage: React.FC = () => {
 
@@ -46,13 +19,19 @@ export const SegmentingPage: React.FC = () => {
 
     return (
         <BodyWithTopBar>
+            <CustomSection container column style={{ marginTop: 10 }}>
+                <Breadcrumbs aria-label="breadcrumb">
+                    <Link color="inherit" href="/">Dashboard</Link>
+                    <Typography color="textPrimary">Segments</Typography>
+                </Breadcrumbs>
+            </CustomSection>
             <CustomSection container>
                 <CustomCard style={{flexGrow: 3, width: 300}}>
-                    <h3>Your segments</h3>
+                    <h3>Quick create notification</h3>
                     <ListSegments segments={segments}/>
                 </CustomCard>
                 <CustomCard style={{ flexGrow: 3 }}>
-                    <CreateSegmentTable data={bigData} segmentAction={createSegment} />
+                    <CreateSegmentTable data={getData()} segmentAction={createSegment} />
                 </CustomCard>
             </CustomSection>
 
