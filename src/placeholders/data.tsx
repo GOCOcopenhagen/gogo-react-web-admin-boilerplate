@@ -54,3 +54,7 @@ export const tableData: TableData = {
         ['Anton Tobias Jensen', 'Active']
     ]
 }
+
+export const random = (max: number): number => {
+    return Math.floor(Math.random() * max);
+}

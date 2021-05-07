@@ -10,7 +10,7 @@ import { NotificationCenterPage } from './Users'
 import { DetailedSegmentingPage } from './Segmenting/Detailed'
 import { SendNotificationPage } from './Segmenting/SendNotification'
 import { DetailedNotificationPage } from './Segmenting/DetailedNotification'
-import { UserInfo } from './Users/UserInfo'
+import { UserInfo } from './Users/DetailedUser'
 
 export default function RootRouter() {
     const [loading, constollLoading] = React.useState<Boolean>(false);
@@ -43,7 +43,7 @@ export default function RootRouter() {
                     <Route exact path={routes[2].path}>
                         <NotificationCenterPage/>
                     </Route>
-                    <Route exact path={routes[2].path+'/user1'}>
+                    <Route exact path={routes[2].path+'/:userid'}>
                         <UserInfo/>
                     </Route>
                 </Switch>

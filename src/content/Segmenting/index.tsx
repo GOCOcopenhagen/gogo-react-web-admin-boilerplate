@@ -1,20 +1,27 @@
 import * as React from 'react'
 import { BodyWithTopBar } from '../../components/templates/BodyWithTopBar';
 import { CustomCard } from '../../components/molecules/Card';
-import { CustomSection } from '../../components/templates/Wrappers';
-import { CreateSegmentTable } from '../../components/molecules/CreateSegmentTable';
+import { CustomSection, VerticalFlexDiv } from '../../components/templates/Wrappers';
 import { Segment } from '../../globals/Types';
-import { ListSegments } from '../../components/molecules/ListSegments';
-import { getData } from '../../placeholders/data';
+import { tableData } from '../../placeholders/data';
 import { Breadcrumbs, Link, Typography } from '@material-ui/core';
+import { DynamicDataTable } from '../../components/organisms/DynamicDataTable';
+import { useHistory } from 'react-router-dom';
+import { ListQuickCreateSegments } from '../../components/molecules/ListQuickCreateSegments';
 
 
 export const SegmentingPage: React.FC = () => {
+    const history = useHistory()
 
-    const [segments, setSegments] = React.useState<Segment[]>([{name: 'First segment', size:220}])
+    const [segments, setSegments] = React.useState<Segment[]>([{ name: 'First segment', size: 220 }])
 
     const createSegment = (name: string, size: number) => {
         setSegments((old) => [...old, ({ name: name, size: size })])
+    }
+
+    const goToSegment = (segmentId: string) => {
+        history.push('/segments/' + segmentId)
+
     }
 
     return (
@@ -26,12 +33,15 @@ export const SegmentingPage: React.FC = () => {
                 </Breadcrumbs>
             </CustomSection>
             <CustomSection container>
-                <CustomCard style={{flexGrow: 3, width: 300}}>
-                    <h3>Quick create notification</h3>
-                    <ListSegments segments={segments}/>
-                </CustomCard>
+                <VerticalFlexDiv style={{ flexGrow: 1, width: 300 }}>
+                    <CustomCard>
+                        <h3>Quick create notification</h3>
+                        <ListQuickCreateSegments segments={segments} />
+                    </CustomCard>
+                </VerticalFlexDiv>
+
                 <CustomCard style={{ flexGrow: 3 }}>
-                    <CreateSegmentTable data={getData()} segmentAction={createSegment} />
+                    <DynamicDataTable title="Your segments" tableData={tableData} customLength={10} onRowPress={goToSegment} />
                 </CustomCard>
             </CustomSection>
 

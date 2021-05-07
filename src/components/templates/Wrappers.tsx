@@ -13,7 +13,11 @@ export const VerticalFlexDiv = styled.div`
     flex-direction: column;
     justify-content: flex-start;
 `
-
+export const HorizontalFlexDiv = styled.div`
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-start;
+`
 export const CustomSection = styled.section<{ container?: boolean, column?: boolean }>`
     display:flex;
     flex-direction:${(props: { column?: boolean }) => (props.column) ? 'column' : 'row'};

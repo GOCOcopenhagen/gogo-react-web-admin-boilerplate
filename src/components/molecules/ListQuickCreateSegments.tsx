@@ -9,7 +9,7 @@ type ListSegmentsProps = {
   segments: Segment[],
 }
 
-export const ListSegments: React.FC<ListSegmentsProps> = ({ segments }) => {
+export const ListQuickCreateSegments: React.FC<ListSegmentsProps> = ({ segments }) => {
 
 
 
@@ -28,7 +28,7 @@ export const ListSegments: React.FC<ListSegmentsProps> = ({ segments }) => {
             <TableCell>{name}</TableCell>
             <TableCell align='right'>{size}</TableCell>
             <TableCell align='right'>
-              <IconButton href='/segments/test-segment'>
+              <IconButton href='/segments/test-segment/new'>
                 <SendIcon />
               </IconButton>
             </TableCell>

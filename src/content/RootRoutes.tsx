@@ -13,7 +13,7 @@ type Route = {
 export const routes: Route[] = [
     {
         path: '/',
-        name: 'Home',
+        name: 'Dashboard',
         icon: <HomeIcon/>,
         secure: false
     },

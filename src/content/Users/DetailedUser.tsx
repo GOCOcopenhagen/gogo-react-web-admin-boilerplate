@@ -1,17 +1,12 @@
-import { createStyles, List, ListItem, ListItemIcon, ListItemText, SwipeableDrawer, Theme, Typography } from '@material-ui/core';
-import { AppBar, IconButton, makeStyles, Toolbar } from '@material-ui/core'
-import MenuIcon from '@material-ui/icons/Menu';
+import { Breadcrumbs, Link, Typography } from '@material-ui/core';
 import * as React from 'react'
-import { useHistory } from 'react-router-dom';
 import { InputField } from '../../components/atoms/InputField';
 import { DefaultButton } from '../../components/atoms/SampleButton';
 import { CustomCard } from '../../components/molecules/Card';
+import { TagList } from '../../components/molecules/TagBubbleList';
 import { ActivityList } from '../../components/organisms/ActivityList';
 import { BodyWithTopBar } from '../../components/templates/BodyWithTopBar';
-import { CustomContainer, CustomSection, HorizontalFlexDivSpaceBetween, VerticalFlexDiv } from '../../components/templates/Wrappers';
-import { routes } from '../../content/RootRoutes';
-import { lightest } from '../../globals/colors';
-import { companyNameAllCaps } from '../../globals/dk_names';
+import { CustomSection, VerticalFlexDiv } from '../../components/templates/Wrappers';
 
 
 const fakeData = [
@@ -62,44 +57,49 @@ const fakeData = [
     },
 ]
 
-
-
 export const UserInfo: React.FC = () => {
 
-    const [name, setName] = React.useState('')
-    const [email, setEmail] = React.useState('')
-    const [password, setPassword] = React.useState('')
+    const [name, setName] = React.useState('Oliver Arnstein')
+    const [email, setEmail] = React.useState('oliver@goco.dk')
 
     const handleChange = (setter: React.Dispatch<React.SetStateAction<string>>) => (event: any) => {
         if (event.target.value) setter(event.target.value)
     }
 
+    const updateUser = () => {
+        console.log(name, email)
+    }
+
 
     return (
         <BodyWithTopBar>
-
-            <div style={{ display: 'flex', flexDirection: 'row', marginTop: 20}}>
-                <CustomSection container column>
-                    <h1 style={{marginBottom: 10}}>Oliver Arnstein</h1>
+            <CustomSection container column style={{ marginTop: 10 }}>
+                <Breadcrumbs aria-label="breadcrumb">
+                    <Link color="inherit" href="/">Dashboard</Link>
+                    <Link color="inherit" href="/users">Users</Link>
+                    <Typography color="textPrimary">Oliver Arnstein</Typography>
+                </Breadcrumbs>
+            </CustomSection>
+            <CustomSection container>
+                <VerticalFlexDiv style={{ flexGrow: 2 }}>
+                    <h1 style={{ marginBottom: 10 }}>Oliver Arnstein</h1>
                     <h2>Activity log</h2>
                     <ActivityList ActivityData={fakeData} />
-                </CustomSection>
-                <CustomSection style={{ margin: 0, marginRight: 30}} >
-                    <VerticalFlexDiv>
-                        <h2>User information</h2>
-                        <CustomCard style={{width: 430}}>
-                            <div style={{display: 'flex', flexDirection: 'column' }}>
-                                <h5>Edit user information</h5>
-                                <InputField placeholder='Username' variant='small' margin onChange={handleChange(setName)} />
-                                <InputField placeholder='Email' variant='small' margin onChange={handleChange(setEmail)} />
-                                <InputField placeholder='Password' variant='small' margin onChange={handleChange(setPassword)} />
-                                <DefaultButton onClick={() => console.log("Changes saved")}>SAVE CHANGES</DefaultButton>
+                </VerticalFlexDiv>
+                <VerticalFlexDiv style={{ flexGrow: 2 }}>
+                    <h2>User information</h2>
+                    <CustomCard style={{ width: '100%' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                            <h5>Edit user information</h5>
+                            <InputField placeholder='First name' variant='small' margin onChange={handleChange(setName)} value={name}/>
+                            <InputField placeholder='Email' variant='small' margin onChange={handleChange(setEmail)} value={email}/>
+                            <TagList tags={["Generelle nyheder", "Fredericiagade-tranche-1", "Web nyheder", "Nye projekter"]} onDelete={(id) => console.log(id)} />
+                            <DefaultButton onClick={updateUser}>SAVE CHANGES</DefaultButton>
+                        </div>
+                    </CustomCard>
 
-                            </div>
-                        </CustomCard>
-                    </VerticalFlexDiv>
-                </CustomSection>
-            </div>
+                </VerticalFlexDiv>
+            </CustomSection>
         </BodyWithTopBar>
     )
 }
