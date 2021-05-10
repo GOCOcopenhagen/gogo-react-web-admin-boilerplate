@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { StatItem } from '../../components/atoms/StatItem';
 import { ActionList } from '../../components/molecules/ActionList';
 import { CustomCard } from '../../components/molecules/Card';
-import { DynamicDataTable, TableData } from '../../components/organisms/DynamicDataTable';
+import { DynamicDataTable } from '../../components/organisms/DynamicDataTable';
 import { BodyWithTopBar } from '../../components/templates/BodyWithTopBar';
 import { CustomSection, VerticalFlexDiv } from '../../components/templates/Wrappers';
 import { Segment } from '../../globals/Types';
@@ -12,7 +12,7 @@ import { tableData } from '../../placeholders/data';
 
 
 const segment: Segment = {
-    name: "Copenhagen - High-end culture",
+    name: "Investor Fredericiagade",
     size: 9362
 }
 

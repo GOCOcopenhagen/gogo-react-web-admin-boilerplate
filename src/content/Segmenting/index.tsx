@@ -2,27 +2,28 @@ import * as React from 'react'
 import { BodyWithTopBar } from '../../components/templates/BodyWithTopBar';
 import { CustomCard } from '../../components/molecules/Card';
 import { CustomSection, VerticalFlexDiv } from '../../components/templates/Wrappers';
-import { Segment } from '../../globals/Types';
 import { tableData } from '../../placeholders/data';
 import { Breadcrumbs, Link, Typography } from '@material-ui/core';
 import { DynamicDataTable } from '../../components/organisms/DynamicDataTable';
 import { useHistory } from 'react-router-dom';
 import { ListQuickCreateSegments } from '../../components/molecules/ListQuickCreateSegments';
+import { DefaultButton } from '../../components/atoms/SampleButton';
 
 
 export const SegmentingPage: React.FC = () => {
     const history = useHistory()
 
-    const [segments, setSegments] = React.useState<Segment[]>([{ name: 'First segment', size: 220 }])
+    const segments = [{ name: 'First segment', size: 220 }]
 
-    const createSegment = (name: string, size: number) => {
-        setSegments((old) => [...old, ({ name: name, size: size })])
-    }
 
     const goToSegment = (segmentId: string) => {
         history.push('/segments/' + segmentId)
-
     }
+
+    const goToNewSegment = () => {
+        history.push('/segments/new')
+    }
+
 
     return (
         <BodyWithTopBar>
@@ -34,6 +35,10 @@ export const SegmentingPage: React.FC = () => {
             </CustomSection>
             <CustomSection container>
                 <VerticalFlexDiv style={{ flexGrow: 1, width: 300 }}>
+                    <CustomCard>
+                        <h3>Create new segment</h3>
+                        <DefaultButton style={{width: '100%'}} onClick={goToNewSegment}>CREATE NEW SEGMENT</DefaultButton>
+                    </CustomCard>
                     <CustomCard>
                         <h3>Quick create notification</h3>
                         <ListQuickCreateSegments segments={segments} />

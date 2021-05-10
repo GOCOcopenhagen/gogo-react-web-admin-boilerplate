@@ -17,7 +17,7 @@ export const IOSNotificationPreview: React.FC<PushNotification> = ({title, subTi
             <div style={{ height: "25px", position: "relative", color: "black" }}>
                 <div style={{ position: "inherit", zIndex: 100, fontSize: '0.8em' }}>
                     <div style={{ float: 'left', textAlign: 'left', padding: '3px 0 0 10px', fontFamily:'sans-serif' }}>{companyName}</div>
-                    <div style={{ float: 'right', textAlign: 'right', padding: '3px 10px 0 0', fontFamily:'sans-serif' }}>Now</div>
+                    <div style={{ float: 'right', textAlign: 'right', padding: '3px 10px 0 0', fontFamily:'sans-serif' }}>{(new Date()).toDateString()}</div>
                 </div>
             </div>
             <div style={{ position: "inherit", zIndex: 100, fontSize: '0.8em', lineHeight: '1.5em', padding: "8px 20px 10px 10px",  fontFamily:'sans-serif'}}>

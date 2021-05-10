@@ -11,8 +11,6 @@ type ListSegmentsProps = {
 
 export const ListQuickCreateSegments: React.FC<ListSegmentsProps> = ({ segments }) => {
 
-
-
   return (
     <Table size="small">
       <TableHead>

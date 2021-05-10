@@ -9,7 +9,7 @@ import { Segment } from '../../globals/Types';
 
 
 const segment: Segment = {
-    name: "Copenhagen - High-end culture",
+    name: "Investor Fredericiagade",
     size: 1000
 }
 

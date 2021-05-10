@@ -12,15 +12,15 @@ import { tableData } from '../../placeholders/data';
 
 
 const segment: Segment = {
-    name: "Copenhagen - High-end culture",
+    name: "Investor Fredericiagade",
     size: 1000
 }
 
 const notification: PushNotification = {
-    name: '3 Days of Design campaign - monday',
-    title: 'Følg med i 3 days of design',
-    content: '3daysofdesign is a platform for global talents to showcase new concepts within design, lifestyle, furniture, lighting and interior design.',
-    sentDate: new Date()
+    name: 'Fredericiagade opdatering',
+    title: 'En lille weekend status på projektet i København K',
+    content: 'Stålprojektet som er igangværende er forlænget en anelse grundet bygningens forhold. Der er fremkommet flere forhold der har forsinket processen, som det tit er med gamle bygninger 😊. ',
+    sentDate: new Date(2021, 13, 4)
 }
 
 export const DetailedNotificationPage: React.FC = () => {

@@ -11,6 +11,7 @@ import { DetailedSegmentingPage } from './Segmenting/Detailed'
 import { SendNotificationPage } from './Segmenting/SendNotification'
 import { DetailedNotificationPage } from './Segmenting/DetailedNotification'
 import { UserInfo } from './Users/DetailedUser'
+import { NewegmentingPage } from './Segmenting/NewSegment'
 
 export default function RootRouter() {
     const [loading, constollLoading] = React.useState<Boolean>(false);
@@ -30,6 +31,9 @@ export default function RootRouter() {
                     </Route>
                     <Route exact path={routes[1].path}>
                         <SegmentingPage/>
+                    </Route>
+                    <Route exact path={routes[1].path+'/new'}>
+                        <NewegmentingPage/>
                     </Route>
                     <Route exact path={routes[1].path+'/:segment'}>
                         <DetailedSegmentingPage/>
