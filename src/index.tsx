@@ -4,7 +4,10 @@ import ReactDOM from 'react-dom'
 import RootRouter from './content/RootRouter'
 import * as serviceWorker from './serviceWorker'
 import './styles/style.scss'
+import Amplify from 'aws-amplify';
+import config from './config'
 
+Amplify.configure(config);
 ReactDOM.render(
     <React.StrictMode>
         <RootRouter />

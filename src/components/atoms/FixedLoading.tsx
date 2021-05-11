@@ -1,12 +1,14 @@
 import styled from 'styled-components'
 
-import { normal } from '../../globals/colors'
+import { light } from '../../globals/colors'
 
 export const FixedLoading = styled.div<{}>`
-    padding: 10px 20px;
-    background: ${normal};
-    position: fixed;
+    background: ${light};
+    position: absolute;
     top: 0;
     right: 0;
     left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
 `
